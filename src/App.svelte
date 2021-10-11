@@ -1,10 +1,22 @@
 <script>
-	export let name;
+	let seed = "";
+	let password = "";
+	let decrypted = "";
+	import iocane from "iocane/web";
+
+	async function decrypt() {
+		let decoded = await iocane.createAdapter().decrypt(seed, password);
+		decrypted = decoded.split(",").join(" ");
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>Citadel seed decryptor</h1>
+	<p>This app decrypts the seed in our browser. No data is send over to our servers.</p>
+	<input placeholder='Encrypted seed without ""' bind:value={seed}>
+	<input placeholder="password" bind:value={password} type="password">
+	<button on:click={decrypt}>Decrypted</button>
+	<p>Your seed is: {decrypted}</p>
 </main>
 
 <style>
