@@ -5,8 +5,12 @@
 	import iocane from "iocane/web";
 
 	async function decrypt() {
-		let decoded = await iocane.createAdapter().decrypt(seed, password);
-		decrypted = decoded.split(",").join(" ");
+		try {
+			let decoded = await iocane.createAdapter().decrypt(seed, password);
+			decrypted = decoded.split(",").join(" ");
+		} catch {
+			decrypted = "Invalid seed or password";
+		}
 	}
 </script>
 
