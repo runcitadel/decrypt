@@ -23,7 +23,7 @@
 	async function updateUserJson() {
 		try {
 			let parsedUserJSON = JSON.parse(userJSON);
-			let newEncryptedSeed = iocane.createAdapter().encrypt(userSeed.split(" ").join(","), newPassword);
+			let newEncryptedSeed = await iocane.createAdapter().encrypt(userSeed.split(" ").join(","), newPassword);
 			let newHashedPassword = bcrypt.hashSync(newPassword, 10);
 			parsedUserJSON.seed = newEncryptedSeed;
 			parsedUserJSON.password = newHashedPassword;
