@@ -31,19 +31,7 @@
  * Released under the Apache License, Version 2.0
  * see: https://github.com/dcodeIO/bcrypt.js for details
  */
-(function (global, factory) {
-  /* AMD */ if (typeof define === "function" && define["amd"])
-    define([], factory);
-  /* CommonJS */ else if (
-    typeof require === "function" &&
-    typeof module === "object" &&
-    module &&
-    module["exports"]
-  )
-    module["exports"] = factory();
-  /* Global */ else
-    (global["dcodeIO"] = global["dcodeIO"] || {})["bcrypt"] = factory();
-})(this, function () {
+
   "use strict";
 
   /**
@@ -51,13 +39,6 @@
    * @type {Object.<string,*>}
    */
   var bcrypt = {};
-
-  /**
-   * The random implementation to use as a fallback.
-   * @type {?function(number):!Array.<number>}
-   * @inner
-   */
-  var randomFallback = null;
 
   /**
    * Generates cryptographically secure random bytes.
@@ -74,35 +55,12 @@
         (a = new Uint32Array(len))
       );
       return Array.prototype.slice.call(a);
-    } catch (e) {}
-    /* fallback */ if (!randomFallback)
-      throw Error(
-        "Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative"
-      );
-    return randomFallback(len);
+    } catch (e) {
+        throw Error(
+          "Neither WebCryptoAPI nor a crypto module is available."
+        );
+    }
   }
-
-  // Test if any secure randomness source is available
-  var randomAvailable = false;
-  try {
-    random(1);
-    randomAvailable = true;
-  } catch (e) {}
-
-  // Default fallback, if any
-  randomFallback = null;
-  /**
-   * Sets the pseudo random number generator to use as a fallback if neither node's `crypto` module nor the Web Crypto
-   *  API is available. Please note: It is highly important that the PRNG used is cryptographically secure and that it
-   *  is seeded properly!
-   * @param {?function(number):!Array.<number>} random Function taking the number of bytes to generate as its
-   *  sole argument, returning the corresponding array of cryptographically secure random byte values.
-   * @see http://nodejs.org/api/crypto.html
-   * @see http://www.w3.org/TR/WebCryptoAPI/
-   */
-  bcrypt.setRandomFallback = function (random) {
-    randomFallback = random;
-  };
 
   /**
    * Synchronously generates a salt.
@@ -1363,5 +1321,4 @@
    */
   bcrypt.decodeBase64 = base64_decode;
 
-  return bcrypt;
-});
+export default bcrypt;
