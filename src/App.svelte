@@ -61,7 +61,7 @@
 	<p>Then save with CTRL+X and try to log in again on the dashboard.</p>
 
 	<footer>
-		<p>Made by <a href="https://twitter.com/AaronDewes">@AaronDewes</a>.<br> Not an official Umbrel too. This page is in no way affiliated, endorsed or supported by Umbrel.</p>
+		<p>Made by <a href="https://twitter.com/AaronDewes">@AaronDewes</a>.<br> Not an official Umbrel tool. This page is in no way affiliated, endorsed or supported by Umbrel.</p>
 			<p>Please be careful when using this page, I'm not responsible for your node breaking when using this page. Please don't use this for illegal activity, this is designed to recover your <b>own</b> node.</p>
 	</footer>
 </main>
