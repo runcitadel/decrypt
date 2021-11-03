@@ -59,6 +59,11 @@
 	<p>To apply these changes, run <code>nano ~/umbrel/db/user.json</code>, delete everything in the file, and put this into it:</p>
 	<textarea bind:value={newUserJSON} readonly></textarea>
 	<p>Then save with CTRL+X and try to log in again on the dashboard.</p>
+
+	<footer>
+		<p>Made by <a href="https://twitter.com/AaronDewes">@AaronDewes</a>.<br> Not an official Umbrel too. This page is in no way affiliated, endorsed or supported by Umbrel.</p>
+			<p>Please be careful when using this page, I'm not responsible for your node breaking when using this page. Please don't use this for illegal activity, this is designed to recover your <b>own</b> node.</p>
+	</footer>
 </main>
 
 <style>
@@ -85,5 +90,15 @@
 	textarea {
 		width: 80vw;
 		height: 20vh;
+	}
+
+	footer {
+		text-align: center;
+		padding: 1em;
+		font-size: 0.8em;
+		background: lightgray;
+		width: 100%;
+		margin: 0;
+		box-sizing: border-box;
 	}
 </style>
