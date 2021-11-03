@@ -2,7 +2,12 @@
 	let seed = "";
 	let password = "";
 	let decrypted = "";
+	let userJSON = "";
+	let userSeed = "";
+	let newPassword = "";
+	let newUserJSON = "";
 	import iocane from "iocane/web";
+	import bcrypt from "./bcrypt.js";
 
 	async function decrypt() {
 		try {
@@ -12,15 +17,48 @@
 			decrypted = "Invalid seed or password";
 		}
 	}
+	async function encrypt() {
+		seed = await iocane.createAdapter().encrypt(decrypted, password);
+	}
+	async function updateUserJson() {
+		try {
+			let parsedUserJSON = JSON.parse(userJSON);
+			let newEncryptedSeed = iocane.createAdapter().encrypt(userSeed.split(" ").join(","), newPassword);
+			let newHashedPassword = bcrypt.hashSync(newPassword, 10);
+			parsedUserJSON.seed = newEncryptedSeed;
+			parsedUserJSON.password = newHashedPassword;
+			newUserJSON = JSON.stringify(parsedUserJSON);
+		} catch(error) {
+			console
+			newUserJSON = "Invalid data!";
+		}
+	}
 </script>
 
 <main>
-	<h1>Citadel seed decryptor</h1>
+	<h1>Umbrel & Citadel seed decryptor and encryptor</h1>
 	<p>This app decrypts the seed in our browser. No data is send over to our servers.</p>
 	<input placeholder='Encrypted seed without ""' bind:value={seed}>
 	<input placeholder="password" bind:value={password} type="password">
-	<button on:click={decrypt}>Decrypted</button>
-	<p>Your seed is: {decrypted}</p>
+	<input placeholder="Decrypted seed" bind:value={decrypted}>
+	<button on:click={decrypt}>Decrypt</button>
+	<button on:click={encrypt}>Encrypt</button>
+	<br>
+	<h1>Reset your password</h1>
+	<p>Forgot your password, but still have your 24 words? Reset your password here!</p>
+	<p>First, turn off your node (unplug it) and reflash the SD card. This will reset the SSH password to "moneyprintergobrrr".</p>
+	<p>Then, SSH into your node and run this command:</p>
+	<p><code>cat ~/umbrel/db/user.json</code></p>
+	<p>Then copy the output and paste it here:</p>
+	<textarea placeholder='user.json' bind:value={userJSON}></textarea>
+	<p>Now, enter your 24 words here (separated by spaces, all lowercase):</p>
+	<input placeholder="24 words" bind:value={userSeed}>
+	<p>Finally, choose a new password:</p>
+	<input placeholder="New password" bind:value={newPassword} type="password">
+	<p><button on:click={updateUserJson}>Update user.json</button></p>
+	<p>To apply these changes, run <code>nano ~/umbrel/db/user.json</code>, delete everything in the file, and put this into it:</p>
+	<textarea bind:value={newUserJSON} readonly></textarea>
+	<p>Then save with CTRL+X and try to log in again on the dashboard.</p>
 </main>
 
 <style>
@@ -42,5 +80,10 @@
 		main {
 			max-width: none;
 		}
+	}
+
+	textarea {
+		width: 80vw;
+		height: 20vh;
 	}
 </style>
