@@ -51,7 +51,7 @@
 	<p><code>cat ~/umbrel/db/user.json</code></p>
 	<p>Then copy the output and paste it here:</p>
 	<textarea placeholder='user.json' bind:value={userJSON}></textarea>
-	<p>Now, enter your 24 words here (separated by spaces, all lowercase):</p>
+	<p>Now, enter your 24 words here (separated by spaces, all lowercase). If you don't have these anymore, no worries, but the display 24 words option on the dashboard won't work after this change again and you won't be able to get them anymore.</p>
 	<input placeholder="24 words" bind:value={userSeed}>
 	<p>Finally, choose a new password:</p>
 	<input placeholder="New password" bind:value={newPassword} type="password">
