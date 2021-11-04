@@ -7,7 +7,7 @@
 	let newPassword = "";
 	let newUserJSON = "";
 	import iocane from "iocane/web";
-	import bcrypt from "./bcrypt.js";
+	import { hashSync } from "./bcrypt.js";
 
 	async function decrypt() {
 		try {
@@ -24,12 +24,12 @@
 		try {
 			let parsedUserJSON = JSON.parse(userJSON);
 			let newEncryptedSeed = await iocane.createAdapter().encrypt(userSeed.split(" ").join(","), newPassword);
-			let newHashedPassword = bcrypt.hashSync(newPassword, 10);
+			let newHashedPassword = hashSync(newPassword, 10);
 			parsedUserJSON.seed = newEncryptedSeed;
 			parsedUserJSON.password = newHashedPassword;
 			newUserJSON = JSON.stringify(parsedUserJSON);
 		} catch(error) {
-			console
+			console.log(error);
 			newUserJSON = "Invalid data!";
 		}
 	}
