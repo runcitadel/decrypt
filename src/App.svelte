@@ -59,7 +59,7 @@
 	<label for="umbrel" class="inline">Umbrel</label>
 	<input type="radio" name="node" on:click={switchNode} value="citadel" id="citadel" class="inline" checked="true">
 	<label for="umbrel" class="inline">Citadel</label>
-	<p>First, turn off your node (unplug it) and reflash the SD card. This will reset the SSH password to "moneyprintergobrrr".</p>
+	<p>First, turn off your node (unplug it) and reflash the SD card. This will reset the SSH password to "moneyprintergobrrr" on Umbrel and "freedom" on Citadel.</p>
 	<p>Then, SSH into your node and run this command:</p>
 	<p><code>cat ~/citadel/db/user.json</code></p>
 	<p>Then copy the output and paste it here:</p>
